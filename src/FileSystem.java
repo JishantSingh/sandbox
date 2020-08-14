@@ -1,6 +1,12 @@
 import java.util.ArrayList;
 
 public class FileSystem {
+
+    public FileSystem() {
+        this.CDrive = new FSDirectory("C:", null);
+
+    }
+
     FSDirectory CDrive;
 
     FSObject getObjectOnPath(String path) {
@@ -88,6 +94,7 @@ public class FileSystem {
     }
 
     public static void main(String[] args) {
+        FileSystem fs = new FileSystem();
     }
 
     class FSObject {
@@ -147,6 +154,13 @@ public class FileSystem {
             return this.data.data;
         }
 
+        void setDataObj(Data thatData) {
+            this.data = thatData;
+        }
+
+        Data getDataObj() {
+            return this.data;
+        }
     }
 
     class Data {
