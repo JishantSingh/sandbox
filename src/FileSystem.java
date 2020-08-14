@@ -67,8 +67,10 @@ public class FileSystem {
             this.name = name;
             this.parent = par;
         }
-        void delete(){
-            parent.contents.remove(this);
+        int delete(){
+            if(this.parent == null) return 1;
+            parent.deleteObj(this);
+            return 0;
         }
     }
 
@@ -77,7 +79,11 @@ public class FileSystem {
 
         public FSDirectory(String name, FSDirectory par) {
             super(name, par);
-            contents = new ArrayList<FSObject>();
+            contents = new ArrayList<>();
+        }
+
+        void deleteObj(FSObject obj){
+            this.contents.remove(obj);
         }
 
     }
