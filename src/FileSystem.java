@@ -5,15 +5,11 @@ public class FileSystem {
     public FileSystem() {
         this.CDrive = new FSDirectory("C:", null);
         CreateFile("C:\\testDir\\file.txt", "sample data");
-        ReadFile("C:\\testDir\\file.txt");
         AddFileLink("C:\\testDir\\file.txt", "C:\\otherDir\\symlink.txt");
-        ReadFile("C:\\otherDir\\symlink.txt");
         ReplaceFileContent("C:\\testDir\\file.txt", "other sample data");
-        ReadFile("C:\\testDir\\file.txt");
-        ReadFile("C:\\otherDir\\symlink.txt");
         MoveFile("C:\\testDir\\file.txt", "C:\\testDir\\file2.txt");
-        CDrive.show("");
-        DeleteFile("C:\\testDir\file.txt");
+        PrintAllFilesInCDrive();
+        DeleteFile("C:\\testDir\\file2.txt");
         PrintAllFilesInCDrive();
     }
 
@@ -51,7 +47,7 @@ public class FileSystem {
         return obj;
     }
 
-    public int PrintAllFilesInCDrive(){
+    public int PrintAllFilesInCDrive() {
         CDrive.show("");
         return 0;
     }
