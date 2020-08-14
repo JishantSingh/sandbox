@@ -25,9 +25,12 @@ public class FileSystem {
                 if(i == n-1){
                     FSFile newFile = new FSFile(s, dir, "");
                     dir.contents.add(newFile);
+                    obj = newFile;
                 }
                 else{
-                    FSDirectory newDir = new FSDirectory()
+                    FSDirectory newDir = new FSDirectory(s, dir);
+                    dir.contents.add(newDir);
+                    obj = newDir;
                 }
             }
         }
@@ -35,7 +38,9 @@ public class FileSystem {
     }
 
     public FSFile createFile(String path, String data){
-
+        FSFile file =  (FSFile) getObjectOnPath(path);
+        file.setData(data);
+        return file;
     }
 
     public static void main(String[] args) {
@@ -68,6 +73,9 @@ public class FileSystem {
         //        private int size;
         public FSFile(String name, FSDirectory par, String data) {
             super(name, par);
+            this.data = data;
+        }
+        void setData(String data){
             this.data = data;
         }
 
