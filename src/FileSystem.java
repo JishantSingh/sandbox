@@ -4,7 +4,15 @@ public class FileSystem {
 
     public FileSystem() {
         this.CDrive = new FSDirectory("C:", null);
-
+        CreateFile("C:\\testDir\\file.txt", "sample data");
+        ReadFile("C:\\testDir\\file.txt");
+        AddFileLink("C:\\testDir\\file.txt", "C:\\otherDir\\symlink.txt");
+        ReadFile("C:\\otherDir\\symlink.txt");
+        ReplaceFileContent("C:\\testDir\\file.txt", "other sample data");
+        ReadFile("C:\\testDir\\file.txt");
+        ReadFile("C:\\otherDir\\symlink.txt");
+        MoveFile("C:\\testDir\\file.txt", "C:\\testDir\\file2.txt");
+        CDrive.show("");
     }
 
     FSDirectory CDrive;
@@ -39,6 +47,16 @@ public class FileSystem {
             }
         }
         return obj;
+    }
+
+    public int ReadFile(String path) {
+        try {
+            FSFile file = (FSFile) getObjectOnPath(path);
+            System.out.println(file.readFile());
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
     }
 
     public int CreateFile(String path, String data) {
@@ -98,7 +116,7 @@ public class FileSystem {
         FileSystem fs = new FileSystem();
     }
 
-    class FSObject {
+    abstract class FSObject {
         protected String name;
         protected FSDirectory parent;
 
@@ -112,6 +130,8 @@ public class FileSystem {
             parent.deleteObj(this);
             return 0;
         }
+
+        abstract void show(String prefix);
     }
 
     class FSDirectory extends FSObject {
@@ -135,13 +155,17 @@ public class FileSystem {
             }
         }
 
+        public void show(String prefix) {
+            for (FSObject obj : this.contents) {
+                obj.show(prefix + this.name + "\\");
+            }
+        }
+
     }
 
     class FSFile extends FSObject {
         private Data data;
 
-
-        //        private int size;
         public FSFile(String name, FSDirectory par, String data) {
             super(name, par);
             this.data = new Data(data);
@@ -153,6 +177,10 @@ public class FileSystem {
 
         String readFile() {
             return this.data.data;
+        }
+
+        void show(String prefix) {
+            System.out.println(prefix + "\\" + this.name);
         }
 
         void setDataObj(Data thatData) {
