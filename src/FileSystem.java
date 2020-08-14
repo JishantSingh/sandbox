@@ -68,8 +68,19 @@ public class FileSystem {
         try {
             FSFile orig = (FSFile) getObjectOnPath(existingFilePath);
             FSFile dest = (FSFile) getObjectOnPath(newFilePath);
-            dest.parent.addObject(orig);
+            dest.setData(orig.readFile());
             orig.delete();
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
+    }
+
+    private int AddFileLink(String source, String dest) {
+        try {
+            FSFile sourceFile = (FSFile) getObjectOnPath(source);
+            FSFile destFile = (FSFile) getObjectOnPath(dest);
+            destFile.data = sourceFile.data;
             return 0;
         } catch (Exception e) {
             return 1;
@@ -119,17 +130,34 @@ public class FileSystem {
     }
 
     class FSFile extends FSObject {
-        private String data;
+        private Data data;
+
 
         //        private int size;
         public FSFile(String name, FSDirectory par, String data) {
             super(name, par);
-            this.data = data;
+            this.data = new Data(data);
         }
 
         void setData(String data) {
-            this.data = data;
+            this.data.set(data);
         }
 
+        String readFile() {
+            return this.data.data;
+        }
+
+    }
+
+    class Data {
+        String data;
+
+        public Data(String val) {
+            data = val;
+        }
+
+        public void set(String val) {
+            this.data = val;
+        }
     }
 }
