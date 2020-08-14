@@ -37,10 +37,23 @@ public class FileSystem {
         return obj;
     }
 
-    public FSFile createFile(String path, String data){
-        FSFile file =  (FSFile) getObjectOnPath(path);
-        file.setData(data);
-        return file;
+    public int CreateFile(String path, String data){
+        try {
+            FSFile file = (FSFile) getObjectOnPath(path);
+            file.setData(data);
+        }
+        catch (Exception e){
+            return 1;
+        }
+        return 0;
+    }
+    public int DeleteFile(String filePath){
+        try {
+            FSFile file = (FSFile) getObjectOnPath(filePath);
+            file
+        }
+
+
     }
 
     public static void main(String[] args) {
@@ -54,7 +67,9 @@ public class FileSystem {
             this.name = name;
             this.parent = par;
         }
-
+        void delete(){
+            parent.contents.remove(this);
+        }
     }
 
     class FSDirectory extends FSObject {
