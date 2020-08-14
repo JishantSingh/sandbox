@@ -22,11 +22,11 @@ public class FileSystem {
             if (!found) {
                 if (i == n - 1) {
                     FSFile newFile = new FSFile(s, dir, "");
-                    dir.contents.add(newFile);
+                    dir.addObject(newFile);
                     obj = newFile;
                 } else {
                     FSDirectory newDir = new FSDirectory(s, dir);
-                    dir.contents.add(newDir);
+                    dir.addObject(newDir);
                     obj = newDir;
                 }
             }
@@ -64,6 +64,18 @@ public class FileSystem {
         }
     }
 
+    private int MoveFile(String existingFilePath, String newFilePath) {
+        try {
+            FSFile orig = (FSFile) getObjectOnPath(existingFilePath);
+            FSFile dest = (FSFile) getObjectOnPath(newFilePath);
+            dest.parent.addObject(orig);
+            orig.delete();
+            return 0;
+        } catch (Exception e) {
+            return 1;
+        }
+    }
+
     public static void main(String[] args) {
     }
 
@@ -93,6 +105,15 @@ public class FileSystem {
 
         void deleteObj(FSObject obj) {
             this.contents.remove(obj);
+        }
+
+        int addObject(FSObject obj) {
+            try {
+                this.contents.add(obj);
+                return 0;
+            } catch (Exception e) {
+                return 1;
+            }
         }
 
     }
