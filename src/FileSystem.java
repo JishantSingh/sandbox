@@ -4,7 +4,7 @@ public class FileSystem {
 
     public FileSystem() {
         this.CDrive = new FSDirectory("C:", null);
-        CreateFile("C:\\testDir\\firstDir\\file.txt", "sample data");
+        CreateFile("C:\\testDir\\file.txt", "sample data");
         ReadFile("C:\\testDir\\file.txt");
         AddFileLink("C:\\testDir\\file.txt", "C:\\otherDir\\symlink.txt");
         ReadFile("C:\\otherDir\\symlink.txt");
@@ -13,6 +13,8 @@ public class FileSystem {
         ReadFile("C:\\otherDir\\symlink.txt");
         MoveFile("C:\\testDir\\file.txt", "C:\\testDir\\file2.txt");
         CDrive.show("");
+        DeleteFile("C:\\testDir\file.txt");
+        PrintAllFilesInCDrive();
     }
 
     FSDirectory CDrive;
@@ -41,13 +43,17 @@ public class FileSystem {
                     obj = newFile;
                 } else {
                     FSDirectory newDir = new FSDirectory(s, dir);
-                    System.out.println("creating directory    "+ s);
                     dir.addObject(newDir);
                     obj = newDir;
                 }
             }
         }
         return obj;
+    }
+
+    public int PrintAllFilesInCDrive(){
+        CDrive.show("");
+        return 0;
     }
 
     public int ReadFile(String path) {
@@ -158,7 +164,6 @@ public class FileSystem {
 
         public void show(String prefix) {
             for (FSObject obj : this.contents) {
-                System.out.println(this.name);
                 obj.show(prefix + this.name + "\\");
             }
         }
