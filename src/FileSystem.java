@@ -16,6 +16,7 @@ public class FileSystem {
         for (int i = 0; i < n; i++) {
             String s = dirP[i];
             if (s == null) continue;
+            assert obj instanceof FSDirectory;
             FSDirectory dir = (FSDirectory) obj;
             boolean found = false;
             for (FSObject child : dir.contents) {
