@@ -10,6 +10,8 @@ public class FileSystem {
         MoveFile("C:\\testDir\\file.txt", "C:\\testDir\\file2.txt");
         PrintAllFilesInCDrive();
         DeleteFile("C:\\testDir\\file2.txt");
+        ReadFile("C:\\otherDir\\symlink.txt");
+        System.out.println();
         PrintAllFilesInCDrive();
     }
 
@@ -195,7 +197,7 @@ public class FileSystem {
         }
     }
 
-    class Data {
+    static class Data {
         String data;
 
         public Data(String val) {
