@@ -5,7 +5,7 @@ public class RomanNumbers {
         final static int y=10;
     }
     public static void main(String[] args) {
-        Solution s = new Solution();
+        ProductReview s = new ProductReview();
         int [][]z= new int[2][2];
         int []y = {1,2,3};
         z[0]=y;
